@@ -19,18 +19,26 @@ public class Hash {
 		BigInteger hashint = null;
 		
 		// Task: Hash a given string using MD5 and return the result as a BigInteger.
+		try{
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			// compute the hash of the input 'entity'
+			md.update(entity.getBytes());
+
+			// we use MD5 with 128 bits digest
+			byte[] digest = md.digest();
 		
-		// we use MD5 with 128 bits digest
-		
-		// compute the hash of the input 'entity'
-		
-		// convert the hash into hex format
-		
-		// convert the hex into BigInteger
-		
-		// return the BigInteger
-		
-		return hashint;
+			// convert the hash into hex format
+			StringBuilder hexString = new StringBuilder();
+			for(byte b : digest) {
+				hexString.append(String.format("%02x", b));
+			}
+			// convert the hex into BigInteger
+			hashint = new BigInteger(hexString.toString(), 16);
+		} catch (NoSuchAlgorithmException e){
+			e.printStackTrace();
+		}
+			// return the BigInteger		
+			return hashint;
 	}
 	
 	public static BigInteger addressSize() {
