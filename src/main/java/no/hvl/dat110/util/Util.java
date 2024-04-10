@@ -42,10 +42,19 @@ public class Util {
 		// The interval (6, 2) using the notation above means; pred = 6 and node = 2
 		// if id = 4, then (6 < 4 <= 2) = false  
 		// if id = 9, then (6 < 9 <= 2) = true
-		
+
+		if(lower.compareTo(upper) > 0) {
+			BigInteger temp = lower;
+			lower = upper;
+			upper = temp;
+		} 
+		if (lower.compareTo(id) <= 0 && id.compareTo(upper) <= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	
 		// Task: given an identifier, id: check whether pred < id <= node
-		
-		return false;
 
 	}
 	
