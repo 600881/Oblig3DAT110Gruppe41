@@ -134,23 +134,31 @@ public class FileManager {
 	 */
 	public Set<Message> requestActiveNodesForFile(String filename) throws RemoteException {
 
-		this.filename = filename;
-		activeNodesforFile = new HashSet<Message>();
-
 		// Task: Given a filename, find all the peers that hold a copy of this file
+		this.filename = filename;
+		Set<Message> succInfo = new HashSet<Message>();
 
 		// generate the N replicas from the filename by calling createReplicaFiles()
+		createReplicaFiles();
 
-		// iterate over the replicas of the file
+		//iterate over the replicas of the file
+		for (int i = 0; i < this.numReplicas; i++) {
 
-		// for each replica, do findSuccessor(replica) that returns successor s.
+			BigInteger replica = this.replicafiles[i];
 
-		// get the metadata (Message) of the replica from the successor (i.e., active
-		// peer) of the file
+			// for each replica, do findSuccessor(replica) that returns successor s.
+			NodeInterface succ = this.chordnode.findSuccessor(replica);
 
-		// save the metadata in the set activeNodesforFile.
+			// get the metadata (Message) of the replica from the successor, s (i.e.
+			// activepeer) of the file
+			Message msg = succ.getFilesMetadata(replica);
 
-		return activeNodesforFile;
+			// save the metadata in the set succInfo.
+			succInfo.add(msg);
+
+		}
+		this.activeNodesforFile = succInfo;
+		return succInfo;
 	}
 
 	/**
