@@ -43,16 +43,10 @@ public class Util {
 		// if id = 4, then (6 < 4 <= 2) = false  
 		// if id = 9, then (6 < 9 <= 2) = true
 
-		if(lower.compareTo(upper) > 0) {
-			BigInteger temp = lower;
-			lower = upper;
-			upper = temp;
-		} 
-		if (lower.compareTo(id) <= 0 && id.compareTo(upper) <= 0) {
-			return true;
-		} else {
-			return false;
+		if(upper.compareTo(lower) < 0) {
+			return lower.compareTo(id) <= 0 || id.compareTo(upper) <= 0;
 		}
+		return lower.compareTo(id) <= 0 && id.compareTo(upper) <= 0;
 	
 		// Task: given an identifier, id: check whether pred < id <= node
 
